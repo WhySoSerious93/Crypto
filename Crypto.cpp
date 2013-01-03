@@ -179,7 +179,7 @@ void inputPassword() // Funktion zur Passworteingabe
     }
 
     std::ofstream codewriter; // Password wird ebenfalls in einer Textdatei gespeichert
-    codewriter.open("password.txt", std::ios::trunc);
+    codewriter.open(passwordFileName, std::ios::trunc);
 
     codewriter << userpassword;
     codewriter.close();
@@ -205,7 +205,7 @@ bool checkPassword()
     }
 
     std::ifstream codereader; // Das Ursprungspassword wird wieder aus der Datei extrahiert
-    codereader.open("password.txt", std::ios::in);
+    codereader.open(passwordFileName, std::ios::in);
 
     codereader >> password;
     codereader.close();
