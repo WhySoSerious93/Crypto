@@ -165,7 +165,7 @@ void inputPassword() // Funktion zur Passworteingabe
 
 	while(true)
 	{
-		temp1 = getch(); // Jeder Character einzeln, ohne angezeigt zu werden --> Ich glaube hier könnte ein Problemfeld sein
+		temp1 = getch();
 
         // Das "Zeichen" carriage return - also ENTER - hat den ASCII-Code 13.
         // D.h. sobald das eingelesene Zeichen gleich 13 ist, ist die Eingabe zu beenden.
@@ -194,13 +194,11 @@ bool checkPassword()
 
 	while(true)
 	{
-		temp2 = getch(); // --> Ebenfalls potenzielles Problemfeld
-		if(GetAsyncKeyState (VK_RETURN))
-		{
-			break;
-		}
-
-		Sleep(100);
+		temp2 = getch(); 
+		if (temp2 == 13) // Siehe inputPassword
+        {
+            break;
+        }
 
 		userinput += temp2;
 		std::cout << "*"; 
