@@ -6,3 +6,4 @@ std::string encoder (std::string input);
 std::string decoder();
 void inputPassword();
 bool checkPassword ();
+    
