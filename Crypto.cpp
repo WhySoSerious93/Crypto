@@ -21,8 +21,6 @@ std::vector<int> charac;  // Positionen der Kleinbuchstaben
 std::string result[1000];
 int c = 0;
 
-char c;
-
 std::string StringToUpper(std::string strToConvert) // Funktion zum Hochstellen der Buchstaben 
 {
 	std::transform(strToConvert.begin(), strToConvert.end(), strToConvert.begin(), ::toupper);
@@ -168,12 +166,13 @@ void inputPassword() // Funktion zur Passworteingabe
 	while(true)
 	{
 		temp1 = getch(); // Jeder Character einzeln, ohne angezeigt zu werden --> Ich glaube hier könnte ein Problemfeld sein
-		if(GetAsyncKeyState (VK_RETURN)) // Solange kein Return gedrückt wurde
-		{
-			break;
-		}
 
-		Sleep(100); // Sonst ist der PC leicht zu schnell für den User bei der Eingabe
+        // Das "Zeichen" carriage return - also ENTER - hat den ASCII-Code 13.
+        // D.h. sobald das eingelesene Zeichen gleich 13 ist, ist die Eingabe zu beenden.
+        if (temp1 == 13) 
+        {
+            break;
+        }
 
 		userpassword += temp1; // Die einzelnen Char werden dem Password hinzugefügt
 		std::cout << "*"; // Die berühmten Sternchen
