@@ -160,7 +160,7 @@ void inputPassword() // Funktion zur Passworteingabe
 
     while(true)
     {
-        temp1 = getch();
+        temp1 = _getch();
 
         // Das "Zeichen" carriage return - also ENTER - hat den ASCII-Code 13.
         // D.h. sobald das eingelesene Zeichen gleich 13 ist, ist die Eingabe zu beenden.
@@ -189,7 +189,7 @@ bool checkPassword()
 
     while(true)
     {
-        temp2 = getch(); 
+        temp2 = _getch(); 
         if (temp2 == 13) // Siehe inputPassword
         {
             break;
