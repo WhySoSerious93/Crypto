@@ -94,13 +94,8 @@ std::string decoder()
 
     std::ifstream decodefile;
 
-    decodefile.open(codeFileName, std::ios::in); // Textdatei mit Code wird geöffnet
-    decodefile.seekg(0, std::ios::end); // Bewegt Zeiger bis zum Ende der Zeile
-
-    int length = decodefile.tellg(); // Position des Zeigers fungiert hier als "Länge" des Textdateiinhaltes
-
-    decodefile.seekg(0, std::ios::beg); // Zeiger wird wieder zum Anfang gezogen
-
+	decodefile.open(codeFileName, std::ios::in); // Textdatei mit Code wird geöffnet
+   
     if (decodefile.is_open())
     {
         std::cout << "Code File Opening successful" << std::endl;
@@ -110,7 +105,7 @@ std::string decoder()
         std::cout << "Couldnt open the Code File" << std::endl;
     }
 
-    if(length == 0) // Kein Inhalt
+	if(decodefile.peek() == std::ifstream::traits_type::eof()) // Kein Inhalt
     {
         std::cout << "HACK! : Somebody tried to break into the file !" << std::endl;
         // IDEE : Fals jemand beim Passwort 3 mal verkackt, wird dass als Hackversuch gewertet und der Inhalt der Textdatei gelöscht
@@ -227,6 +222,7 @@ bool checkPassword()
         }
     }
     // NOTIZ: Man könnte sich doch die ganze Prozedur sparen, wenn man userinput == password benutzt, oder ? Sry wenns ne dumme Idee ist 
+
 
     return true; // Passwörter stimmen überein
 }
