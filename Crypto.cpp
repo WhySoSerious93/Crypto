@@ -67,7 +67,7 @@ std::string encoder (std::string input)
 
     std::ofstream codefile; // Der codierte String wird in eine extra Textdatei hineingespeichert
 
-    codefile.open("code.txt", std::ios::trunc);
+    codefile.open(codeFileName, std::ios::trunc);
 
     if (codefile.is_open())
     {
@@ -94,7 +94,7 @@ std::string decoder()
 
     std::ifstream decodefile;
 
-    decodefile.open("code.txt", std::ios::in); // Textdatei mit Code wird geöffnet
+    decodefile.open(codeFileName, std::ios::in); // Textdatei mit Code wird geöffnet
     decodefile.seekg(0, std::ios::end); // Bewegt Zeiger bis zum Ende der Zeile
 
     int length = decodefile.tellg(); // Position des Zeigers fungiert hier als "Länge" des Textdateiinhaltes
