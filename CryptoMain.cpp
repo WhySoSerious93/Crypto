@@ -21,7 +21,7 @@ int main(void)
 
     // const char* const alpha = "ABCDEFGH IJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-    cout << "Please type in your string : " ; 
+    cout << "Please type in your string (Finish with '.') : " ; 
     getline(cin, userinput, '.');
 
     cin.clear(); // buffer von getline leeren
@@ -33,7 +33,7 @@ int main(void)
     ec_input = encoder(userinput); // encoder = Funktion zur Verschlüsselung
 
     cout << endl;
-    cout << "Do you want to decode your string again ?: "; // Frage ob String wieder entschlüsselt werden soll 
+    cout << "Do you want to decode your string again ? (y/n): "; // Frage ob String wieder entschlüsselt werden soll 
     getline(cin, answer);
 
     cin.ignore(); // Funktion, damit das "newline"-Zeichen aus dem Buffer ignoriert wird --> Funktioniert aber leider nicht wirklich
