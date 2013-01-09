@@ -18,7 +18,7 @@ std::string dc_param = ""; // Der endgültige, verschlüsselte String
 std::vector<int> positions; // Positionen der Leerzeichen
 std::vector<int> charac;  // Positionen der Kleinbuchstaben
 
-std::string result[1000];
+std::vector<std::string> result;
 int c = 0;
 
 std::string StringToUpper(std::string strToConvert) // Funktion zum Hochstellen der Buchstaben 
@@ -53,16 +53,16 @@ std::string encoder (std::string input)
         {
             if (input[i] == a_bet[j])
             {
-                result[c] = c_bet[j]; // Entsprechender Code-Strings wird dem Array hinzugefügt
+                result.push_back(c_bet[j]); // Entsprechender Code-Strings wird dem Array hinzugefügt
                 c++;
             }
         }
     }
 
 
-    for (unsigned int k = 0; k < input.length(); k++)
+	for (std::vector<std::string>::iterator it = result.begin(); it != result.end(); ++it)
     {
-        dc_param += result[k] + "|"; // die '|' dienen dazu, damit der decoder später die Code-Strings besser voneinander unterscheiden kann
+        dc_param += *it + "|"; // die '|' dienen dazu, damit der decoder später die Code-Strings besser voneinander unterscheiden kann
     }
 
     std::ofstream codefile; // Der codierte String wird in eine extra Textdatei hineingespeichert
@@ -77,6 +77,7 @@ std::string encoder (std::string input)
     {
         std::cout << "Couldnt open the Code File" << std::endl;
     }
+
     codefile << dc_param; // Code-String wird in die Datei hineingeschrieben
     codefile.close();
     
@@ -93,6 +94,8 @@ std::string decoder()
     std::string codeinput; // Dorthin wird der Inhalt der Textdatei extrahiert
 
     std::ifstream decodefile;
+
+	std::cout << std::endl;
 
 	decodefile.open(codeFileName, std::ios::in); // Textdatei mit Code wird geöffnet
    
