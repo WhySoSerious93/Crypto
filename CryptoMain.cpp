@@ -29,6 +29,7 @@ int main(void)
 
     cout << "Please type in a password: "; // Password, damit nicht jeder den String wieder entschlüsseln kann  
     inputPassword();						// --> Dient für mich als Password-Programmierübung
+	std::cout << std::endl;
 
     ec_input = encoder(userinput); // encoder = Funktion zur Verschlüsselung
 
@@ -45,21 +46,21 @@ int main(void)
         cout << "Please type the Password : ";
         if(!checkPassword()) // Prüfung ob Passwort übereinstimmt
         {
-            cout << "ERROR : Password doesnt match !" << endl;
+            cout << "\nERROR : Password doesnt match !" << endl;
         }
         else
         {
             dc_input = decoder(); // Funktion zum Entschlüsseln
-            cout << "Your original string : " << dc_input << endl;
+            cout << "\nYour original string : " << dc_input << endl;
         }
     }
     else if (answer == "n" || answer == "N")
     {
-        cout << "Your coded string : " << ec_input << endl; 
+        cout << "\nYour coded string : " << ec_input << endl; 
     }
     else
     {
-        cout << "ERROR : Couldnt understand your input !" << endl;
+        cout << "\nERROR : Couldnt understand your input !" << endl;
     }
 
     cout << endl;
