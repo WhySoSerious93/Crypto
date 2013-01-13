@@ -37,10 +37,6 @@ int main(void)
     cout << "Do you want to decode your string again ? (y/n): "; // Frage ob String wieder entschlüsselt werden soll 
     getline(cin, answer);
 
-    cin.ignore(); // Funktion, damit das "newline"-Zeichen aus dem Buffer ignoriert wird --> Funktioniert aber leider nicht wirklich
- 
-    cout << "Answer : " << answer << endl;
-
     if (answer == "y" || answer == "Y") 
     {
         cout << "Please type the Password : ";
