@@ -208,24 +208,13 @@ bool checkPassword()
     codereader >> password;
     codereader.close();
 
-    if(userinput.length() != password.length()) // Die Länge muss auf jeden Fall übereinstimmen
+    if(userinput != password) // Die Länge muss auf jeden Fall übereinstimmen
     {
         std::cout << "ERROR : Password doesnt match !" << std::endl;
         return false;
     }
     else
     {
-        for (unsigned int i = 0; i < userinput.length(); i++)
-        {
-            if(userinput[i] != password[i]) // Jeder Char wird einzeln überprüft
-            {
-                std::cout << "ERROR : Password doesnt match !" << std::endl;
-                return false; // Passwörter stimmen nicht überein
-            }
-        }
+        return true;
     }
-    // NOTIZ: Man könnte sich doch die ganze Prozedur sparen, wenn man userinput == password benutzt, oder ? Sry wenns ne dumme Idee ist 
-
-
-    return true; // Passwörter stimmen überein
 }
