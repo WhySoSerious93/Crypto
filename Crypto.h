@@ -16,3 +16,12 @@ static const char* passwordFileName = "password.txt";
 static const char* codeFileName = "code.txt";
 
 #endif // _CRYPTO_H_
+
+/*
+	TO - DO - LIST:
+	--> Bei Passwortübergabe : Return - Problem muss behoben werden
+	--> Password-Prüfprozedur kürzen 
+	--> Bei Stringeingabe : Probleme mit "ß" beheben
+
+
+*/
