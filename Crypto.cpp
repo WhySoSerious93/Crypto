@@ -1,12 +1,37 @@
 #include <string>
 #include <algorithm>
-#include <conio.h> // Angeblich veraltete, Non-Standard Bibliothek (Erkennt man vllt schon an dem .h)
-#include <windows.h>
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <ctype.h>
 #include "Crypto.h"
+
+#ifdef _WIN32
+#   include <conio.h> // Angeblich veraltete, Non-Standard Bibliothek (Erkennt man vllt schon an dem .h)
+#   include <windows.h>
+#   define ASCII_ENTER 13
+#else
+// _getch per Hand definieren für Linux/Unix
+#   include <stdio.h>
+#   include <termios.h>
+#   include <unistd.h>
+
+int _getch() {
+    // http://cboard.cprogramming.com/faq-board/27714-faq-there-getch-conio-equivalent-linux-unix.html
+    struct termios oldt, newt;
+    int ch;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    ch = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
+}
+
+#   define ASCII_ENTER 10
+
+#endif
 
 const char* const a_bet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Natürliches Alphabet zum Ver-und Entschlüsseln
 
@@ -21,7 +46,7 @@ std::vector<int> charac;  // Positionen der Kleinbuchstaben
 std::vector<std::string> result;
 int c = 0;
 
-std::string StringToUpper(std::string strToConvert) // Funktion zum Hochstellen der Buchstaben 
+std::string StringToUpper(std::string strToConvert) // Funktion zum Hochstellen der Buchstaben
 {
     std::transform(strToConvert.begin(), strToConvert.end(), strToConvert.begin(), ::toupper);
 
@@ -80,17 +105,17 @@ std::string encoder (std::string input)
 
     codefile << dc_param; // Code-String wird in die Datei hineingeschrieben
     codefile.close();
-    
+
     return dc_param; // Der codierte String wird zurückgegeben
 }
 
 std::string decoder()
 {
-    int start = 0; 
+    int start = 0;
     int end;
 
     std::vector<std::string> container; // Dient als Speicher für die einzelnen Code-Strings
-    std::string final = ""; // der endgültige, entschlüsselte String 
+    std::string final = ""; // der endgültige, entschlüsselte String
     std::string codeinput; // Dorthin wird der Inhalt der Textdatei extrahiert
 
     std::ifstream decodefile;
@@ -98,7 +123,7 @@ std::string decoder()
 	std::cout << std::endl;
 
 	decodefile.open(codeFileName, std::ios::in); // Textdatei mit Code wird geöffnet
-   
+
     if (decodefile.is_open())
     {
         std::cout << "Code File Opening successful" << std::endl;
@@ -133,7 +158,7 @@ std::string decoder()
 
         for (unsigned int j = 0; j < container.size(); j++)
         {
-            for (int k = 0; k < 26 ; k++)  
+            for (int k = 0; k < 26 ; k++)
             {
                 if(container.at(j) == c_bet[k]) // Rückumwandlung Code-Strings --> Normale Buchstaben
                 {
@@ -160,6 +185,7 @@ void inputPassword() // Funktion zur Passworteingabe
 {
     char temp1;
     std::string userpassword; // Das spätere Nutzerpassword
+    std::cin.ignore(); // Eingabestream vorm Einlesen leeren.
 
     while(true)
     {
@@ -167,7 +193,7 @@ void inputPassword() // Funktion zur Passworteingabe
 
         // Das "Zeichen" carriage return - also ENTER - hat den ASCII-Code 13.
         // D.h. sobald das eingelesene Zeichen gleich 13 ist, ist die Eingabe zu beenden.
-        if (temp1 == 13) 
+        if (temp1 == ASCII_ENTER)
         {
             break;
         }
@@ -192,14 +218,14 @@ bool checkPassword()
 
     while(true)
     {
-        temp2 = _getch(); 
-        if (temp2 == 13) // Siehe inputPassword
+        temp2 = _getch();
+        if (temp2 == ASCII_ENTER) // Siehe inputPassword
         {
             break;
         }
 
         userinput += temp2;
-        std::cout << "*"; 
+        std::cout << "*";
     }
 
     std::ifstream codereader; // Das Ursprungspassword wird wieder aus der Datei extrahiert
