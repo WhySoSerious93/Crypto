@@ -10,6 +10,7 @@
 #   include <conio.h> // Angeblich veraltete, Non-Standard Bibliothek (Erkennt man vllt schon an dem .h)
 #   include <windows.h>
 #   define ASCII_ENTER 13
+#	define ASCII_BACKSPACE 8
 #else
 // _getch per Hand definieren für Linux/Unix
 #   include <stdio.h>
@@ -186,6 +187,7 @@ void inputPassword() // Funktion zur Passworteingabe
     char temp1;
     std::string userpassword; // Das spätere Nutzerpassword
     std::cin.ignore(); // Eingabestream vorm Einlesen leeren.
+	std::vector<char>passwordhelper;
 
     while(true)
     {
@@ -197,10 +199,23 @@ void inputPassword() // Funktion zur Passworteingabe
         {
             break;
         }
+		else if (temp1 == ASCII_BACKSPACE)
+		{
+			std::cout << "\b";
+			passwordhelper.pop_back();
 
-        userpassword += temp1; // Die einzelnen Char werden dem Password hinzugefügt
-        std::cout << "*"; // Die berühmten Sternchen
+		}
+
+		passwordhelper.push_back(temp1);
+        std::cout << "*";
     }
+	for (std::vector<char>::iterator it = passwordhelper.begin();it != passwordhelper.end(); it++)
+	{
+		std::cout << *it << std::endl;
+		userpassword += *it;
+	}
+
+	std::cout << userpassword << std::endl;
 
     std::ofstream codewriter; // Password wird ebenfalls in einer Textdatei gespeichert
     codewriter.open(passwordFileName, std::ios::trunc);
@@ -215,6 +230,7 @@ bool checkPassword()
     char temp2;
     std::string userinput; // das vom Benutzer eingetippte Password
     std::string password; // Das Ursprungspasswort
+	std::vector<char> inputhelper;
 
     while(true)
     {
@@ -223,10 +239,22 @@ bool checkPassword()
         {
             break;
         }
+		else if (temp2 == ASCII_BACKSPACE)
+		{
+			std::cout << "\b";
+			inputhelper.pop_back();
 
-        userinput += temp2;
+		}
+
+		inputhelper.push_back(temp2);
         std::cout << "*";
     }
+
+	for (std::vector<char>::iterator it = inputhelper.begin();it != inputhelper.end(); it++)
+	{
+		userinput += *it;
+	}
+
 
     std::ifstream codereader; // Das Ursprungspassword wird wieder aus der Datei extrahiert
     codereader.open(passwordFileName, std::ios::in);
